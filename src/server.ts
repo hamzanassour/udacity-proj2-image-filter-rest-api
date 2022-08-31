@@ -18,12 +18,14 @@ import {Request, Response} from 'express';
   app.get("/filteredimage", async (req: Request, res: Response) => {
     const image_url = req.query.image_url;
     if (!image_url) {
+      // if we don't find an image_url query parameter in the request we sen a 400 status 
       return res.status(400).send('you shouls give  a valid url ');
     }
     else{
+      // filter our image 
       const filteredPath = await filterImageFromURL(image_url);
        res.sendFile(filteredPath, {}, () => deleteLocalFiles([filteredPath]));
-    } 
+    }
   });
   //! END @TODO1
   
